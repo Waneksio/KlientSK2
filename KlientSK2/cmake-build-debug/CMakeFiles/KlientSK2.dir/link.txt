@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/KlientSK2.dir/main.cpp.o  -o KlientSK2 
