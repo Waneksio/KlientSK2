@@ -123,6 +123,33 @@ KlientSK2/fast:
 	$(MAKE) -f CMakeFiles/KlientSK2.dir/build.make CMakeFiles/KlientSK2.dir/build
 .PHONY : KlientSK2/fast
 
+Player.o: Player.cpp.o
+
+.PHONY : Player.o
+
+# target to build an object file
+Player.cpp.o:
+	$(MAKE) -f CMakeFiles/KlientSK2.dir/build.make CMakeFiles/KlientSK2.dir/Player.cpp.o
+.PHONY : Player.cpp.o
+
+Player.i: Player.cpp.i
+
+.PHONY : Player.i
+
+# target to preprocess a source file
+Player.cpp.i:
+	$(MAKE) -f CMakeFiles/KlientSK2.dir/build.make CMakeFiles/KlientSK2.dir/Player.cpp.i
+.PHONY : Player.cpp.i
+
+Player.s: Player.cpp.s
+
+.PHONY : Player.s
+
+# target to generate assembly for a file
+Player.cpp.s:
+	$(MAKE) -f CMakeFiles/KlientSK2.dir/build.make CMakeFiles/KlientSK2.dir/Player.cpp.s
+.PHONY : Player.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... KlientSK2"
 	@echo "... edit_cache"
+	@echo "... Player.o"
+	@echo "... Player.i"
+	@echo "... Player.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

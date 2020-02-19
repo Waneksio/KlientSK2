@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/KlientSK2.dir/main.cpp.o"
+  "CMakeFiles/KlientSK2.dir/Player.cpp.o"
   "KlientSK2.pdb"
   "KlientSK2"
 )

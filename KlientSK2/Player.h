@@ -7,7 +7,13 @@
 
 
 class Player {
-
+public:
+    int mX;
+    int mY;
+    int mSize;
+    int mId;
+    Player(int x, int y, int size, int id);
+    void move(int newX, int newY, int newSize);
 };
 
 
