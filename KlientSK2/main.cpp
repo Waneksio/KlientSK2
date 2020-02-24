@@ -143,12 +143,20 @@ int main()
 
     char message[1024];
     read(sock, message, sizeof(message));
-    std::string id = std::string(message);
-    my_id = std::stoi(message);
+    memcpy(&my_id, &message[0], sizeof(my_id));
     std::cout << my_id << "\n";
     myPlayer = new Player(0, 0, 1, my_id);
+    memset(message, 0, sizeof(message));
 
-    std::string newCoordinates = "-10 0";
+    char buffer[1024];
+    int writeIndex = 0;
+    int playerIndex;
+    int newX = 10;
+    int newY = 20;
+    memcpy(&buffer[writeIndex], &newX, sizeof(newX));
+    writeIndex += sizeof(newX);
+    memcpy(&buffer[writeIndex], &newY, sizeof(newY));
+    writeIndex += sizeof(newY);
 
 /* SFML INITIALIZATION:
 -----------------------------------------------------------------------------*/
@@ -169,42 +177,45 @@ int main()
         handleInputs(window);
 
         //loop break:
-        if (newCoordinates.length() != write(sock, newCoordinates.data(), newCoordinates.length()))
+        if (writeIndex != write(sock, buffer, writeIndex))
             break;
 
         while (true)
         {
-            read(sock, &message, sizeof(message));
-            std::string newMessage = std::string(message);
-            memset(message, 0, sizeof(message));
+            int readIndex = 0;
+            int xShift;
+            int yShift;
+            int size;
+            bool stop;
 
-            if (newMessage.find(endLoop) != std::string::npos)
+            if (0 >= read(sock, &message, sizeof(message)))
                 break;
 
-            //std::cout << newMessage << "\n";
+            memcpy(&playerIndex, &message[readIndex], sizeof(playerIndex));
+            readIndex += sizeof(playerIndex);
+            memcpy(&xShift, &message[readIndex], sizeof(xShift));
+            readIndex += sizeof(xShift);
+            memcpy(&yShift, &message[readIndex], sizeof(yShift));
+            readIndex += sizeof(yShift);
+            memcpy(&size, &message[readIndex], sizeof(size));
+            readIndex += sizeof(size);
+            memcpy(&stop, &message[readIndex], sizeof(stop));
 
-            int position = newMessage.find(" ");
-            std::string identifier = newMessage.substr(0, position);
-            int integerId = std::stoi(identifier);
-            newMessage = newMessage.substr(position + 1, newMessage.size());
-            position = newMessage.find(" ");
-            std::string coordinateX = newMessage.substr(0, position);
-            newMessage = newMessage.substr(position + 1, newMessage.size());
-            position = newMessage.find(" ");
-            std::string coordinateY = newMessage.substr(0, position);
-            std::string size = newMessage.substr(position + 1, newMessage.size());
+            if (playerIndex == 0 && stop)
+                break;
 
             bool newPlayer = true;
 
             for (Player * player : otherPlayers) {
-                if (player->mId == integerId) {
-                    player->move(std::stoi(coordinateX), std::stoi(coordinateY), std::stoi(size));
+                if (player->mId == playerIndex) {
+                    player->move(xShift, yShift, size);
                     newPlayer = false;
                     break;
                 }
             }
+
             if (newPlayer) {
-                otherPlayers.emplace_back(new Player(std::stoi(coordinateX), std::stoi(coordinateY), std::stoi(size), integerId));
+                otherPlayers.emplace_back(new Player(xShift, yShift, size, playerIndex));
             }
         }
         std::cout << "XD\n";
