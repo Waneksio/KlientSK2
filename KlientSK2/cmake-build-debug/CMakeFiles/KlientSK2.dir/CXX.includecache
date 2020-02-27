@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/home/matt/CLionProjects/KlientSK2/KlientSK2/Food.h
+
 /home/matt/CLionProjects/KlientSK2/KlientSK2/Player.h
 
 /home/matt/CLionProjects/KlientSK2/KlientSK2/main.cpp
@@ -41,6 +43,8 @@ SFML/Graphics.hpp
 -
 Player.h
 /home/matt/CLionProjects/KlientSK2/KlientSK2/Player.h
+Food.h
+/home/matt/CLionProjects/KlientSK2/KlientSK2/Food.h
 
 /home/matt/rewieer/Libraries/SFML-2.5.1/include/SFML/Config.hpp
 TargetConditionals.h

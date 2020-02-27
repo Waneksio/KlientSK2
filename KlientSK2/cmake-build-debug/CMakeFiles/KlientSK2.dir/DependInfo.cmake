@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/matt/CLionProjects/KlientSK2/KlientSK2/Food.cpp" "/home/matt/CLionProjects/KlientSK2/KlientSK2/cmake-build-debug/CMakeFiles/KlientSK2.dir/Food.cpp.o"
   "/home/matt/CLionProjects/KlientSK2/KlientSK2/Player.cpp" "/home/matt/CLionProjects/KlientSK2/KlientSK2/cmake-build-debug/CMakeFiles/KlientSK2.dir/Player.cpp.o"
   "/home/matt/CLionProjects/KlientSK2/KlientSK2/main.cpp" "/home/matt/CLionProjects/KlientSK2/KlientSK2/cmake-build-debug/CMakeFiles/KlientSK2.dir/main.cpp.o"
   )

@@ -88,6 +88,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/matt/CLionProjects/KlientSK2/KlientSK2/Food.cpp">
+			<Option target="KlientSK2"/>
+		</Unit>
+		<Unit filename="/home/matt/CLionProjects/KlientSK2/KlientSK2/Food.h">
+			<Option target="KlientSK2"/>
+		</Unit>
 		<Unit filename="/home/matt/CLionProjects/KlientSK2/KlientSK2/Player.cpp">
 			<Option target="KlientSK2"/>
 		</Unit>

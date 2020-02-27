@@ -18,5 +18,5 @@ if(SFML_FOUND)
     message(STATUS "SFML_VERSION: ${SFML_VERSION}")
 endif()
 
-add_executable(KlientSK2 main.cpp Player.cpp Player.h)
+add_executable(KlientSK2 main.cpp Player.cpp Player.h Food.cpp Food.h)
 target_link_libraries (KlientSK2 sfml-graphics sfml-window sfml-system)

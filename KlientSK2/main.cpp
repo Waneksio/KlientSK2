@@ -14,6 +14,7 @@
 #include <netdb.h>
 #include <SFML/Graphics.hpp>
 #include "Player.h"
+#include "Food.h"
 
 /* GLOBAL VARIABLES:
 -----------------------------------------------------------------------------*/
@@ -22,26 +23,9 @@ char * port = "8080";
 int my_id;
 Player * myPlayer;
 std::vector<Player*> otherPlayers;
-std::string endLoop = std::string("end");
+std::vector<Food*> snacks;
 const int windowX = 800, windowY = 800;
 int maxPlayersCount = 10;
-
-/* FOOD:
------------------------------------------------------------------------------*/
-class Food
-{
-private:
-    struct FoodPiece
-    {
-        float x;
-        float y;
-        int points;
-    };
-    std::vector<FoodPiece> foodPieces;
-
-public:
-
-};
 
 /* HANDLING INPUT FROM SERVER:
 -----------------------------------------------------------------------------*/
@@ -142,17 +126,32 @@ int main()
     freeaddrinfo(resolved);
 
     char message[1024];
-    read(sock, message, sizeof(message));
-    memcpy(&my_id, &message[0], sizeof(my_id));
+    int readIndex = 0;
+    while (0 < read(sock, message, sizeof(message))) {
+        int id;
+        int x;
+        int y;
+        memcpy(&id, &message[readIndex], sizeof(id));
+        readIndex += sizeof(id);
+        if (id != -1) {
+            my_id = id;
+            break;
+        }
+        memcpy(&x, &message[readIndex], sizeof(x));
+        readIndex += sizeof(x);
+        memcpy(&y, &message[readIndex], sizeof(y));
+        readIndex += sizeof(y);
+        memset(&message, 0, sizeof(message));
+        snacks.emplace_back(new Food(x, y));
+    }
     std::cout << my_id << "\n";
     myPlayer = new Player(0, 0, 1, my_id);
-    memset(message, 0, sizeof(message));
 
     char buffer[1024];
     int writeIndex = 0;
     int playerIndex;
-    int newX = 10;
-    int newY = 20;
+    int newX = 0;
+    int newY = 0;
     memcpy(&buffer[writeIndex], &newX, sizeof(newX));
     writeIndex += sizeof(newX);
     memcpy(&buffer[writeIndex], &newY, sizeof(newY));
@@ -173,6 +172,7 @@ int main()
     //while (true)
     while (window.isOpen())
     {
+        // TODO: displaying players and food, eating food
         //keyboard:
         handleInputs(window);
 
@@ -191,6 +191,7 @@ int main()
             if (0 >= read(sock, &message, sizeof(message)))
                 break;
 
+
             memcpy(&playerIndex, &message[readIndex], sizeof(playerIndex));
             readIndex += sizeof(playerIndex);
             memcpy(&xShift, &message[readIndex], sizeof(xShift));
@@ -203,6 +204,11 @@ int main()
 
             if (playerIndex == 0 && stop)
                 break;
+
+            if ((playerIndex == -1) || (size == -1)) {
+                snacks.emplace_back(new Food(xShift, yShift));
+                continue;
+            }
 
             bool newPlayer = true;
 
@@ -218,7 +224,7 @@ int main()
                 otherPlayers.emplace_back(new Player(xShift, yShift, size, playerIndex));
             }
         }
-        std::cout << "XD\n";
+        std::cout << snacks.size() << "\n";
 
         //handle input:
         display(window);
