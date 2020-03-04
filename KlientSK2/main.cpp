@@ -127,12 +127,15 @@ int main()
 
     char message[1024];
     int readIndex = 0;
-    while (0 < read(sock, message, sizeof(message))) {
+    int check;
+    while (0 < (check = read(sock, message, sizeof(message)))) {
         int id;
         int x;
         int y;
         memcpy(&id, &message[readIndex], sizeof(id));
         readIndex += sizeof(id);
+        std::cout << check << "\n";
+        std::cout << id << "\n";
         if (id != -1) {
             my_id = id;
             break;
